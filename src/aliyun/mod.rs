@@ -3,6 +3,7 @@
 //! Only OSS has been supported.
 
 mod oss;
+mod sign;
 pub use oss::Signer as AliyunOssSigner;
 
 mod config;
