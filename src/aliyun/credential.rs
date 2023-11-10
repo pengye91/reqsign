@@ -5,6 +5,7 @@ use std::sync::Mutex;
 use anyhow::anyhow;
 use anyhow::Result;
 use log::debug;
+use log::info;
 use reqwest::Client;
 use serde::Deserialize;
 
@@ -34,6 +35,7 @@ impl Credential {
         if (self.access_key_id.is_empty() || self.access_key_secret.is_empty())
             && self.security_token.is_none()
         {
+            debug!("cred is not valid.");
             return false;
         }
         // Take 120s as buffer to avoid edge cases.
@@ -41,9 +43,11 @@ impl Credential {
             .expires_in
             .map(|v| v > now() + chrono::Duration::minutes(2))
         {
+            debug!("valid: {valid}, check expiration, expires_in: {:?}", self.expires_in);
             return valid;
         }
 
+        info!("valid: true. expires_in: {:?}", self.expires_in);
         true
     }
 }
