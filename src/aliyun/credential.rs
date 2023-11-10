@@ -145,6 +145,7 @@ impl Loader {
         let url = format!("https://sts.aliyuncs.com/?Action=AssumeRoleWithOIDC&OIDCProviderArn={}&RoleArn={}&RoleSessionName={}&Format=JSON&Version=2015-04-01&Timestamp={}&OIDCToken={}", provider_arn, role_arn, role_session_name, format_rfc3339(now()), token);
 
         debug!("try to get sts tokens using:{url}");
+        println!("try to get sts tokens using:{url}");
 
         let req = self.client.get(&url).header(
             http::header::CONTENT_TYPE.as_str(),
